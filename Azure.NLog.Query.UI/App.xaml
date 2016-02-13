@@ -2,8 +2,15 @@
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:local="clr-namespace:Azure.NLog.Query.UI"
+             xmlns:ctrl="clr-namespace:Azure.NLog.Query.UI.Controllers"
+             xmlns:system="clr-namespace:System;assembly=mscorlib"
              StartupUri="MainWindow.xaml">
-    <Application.Resources>
-         
-    </Application.Resources>
+  <Application.Resources>
+    <Style TargetType="Label">
+      <Setter Property="Width" Value="200" />
+    </Style>
+    <Style TargetType="DockPanel">
+      <Setter Property="LastChildFill" Value="True" />
+    </Style>
+  </Application.Resources>
 </Application>

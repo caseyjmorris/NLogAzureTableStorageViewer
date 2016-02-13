@@ -15,15 +15,6 @@
   </Window.DataContext>
 
   <Window.Resources>
-
-
-    <Style TargetType="Label">
-      <Setter Property="Width" Value="200" />
-    </Style>
-    <Style TargetType="DockPanel">
-      <Setter Property="LastChildFill" Value="True" />
-    </Style>
-
     <x:Array x:Key="Level" Type="system:String">
       <system:String>
         Debug
@@ -117,7 +108,7 @@
               ScrollViewer.CanContentScroll="True"
               ScrollViewer.VerticalScrollBarVisibility="Auto"
               ScrollViewer.HorizontalScrollBarVisibility="Auto"
-              ColumnWidth="*">
+              ColumnWidth="*" ClipToBounds="True">
       <DataGrid.Columns>
         <DataGridTextColumn Header="Time stamp" Binding="{Binding LogTimeStamp}" />
         <DataGridTextColumn Header="Partition key" Binding="{Binding PartitionKey}" />
