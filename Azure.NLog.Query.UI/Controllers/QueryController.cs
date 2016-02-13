@@ -18,7 +18,10 @@ namespace Azure.NLog.Query.UI.Controllers
     {
       this.RetrieveResults = new PassThroughCommand(() => this.GetResults());
       this.Connection = new ConnectionViewModel();
-      this.Query = new QueryViewModel();
+      this.Query = new QueryViewModel
+      {
+        MaxResults = 200,
+      };
     }
 
     public ICommand RetrieveResults { get; private set; }

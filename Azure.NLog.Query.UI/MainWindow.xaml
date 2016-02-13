@@ -44,58 +44,70 @@
     </x:Array>
   </Window.Resources>
 
-  <StackPanel>
-    <WrapPanel>
-      <Label>
-        Connection string
-      </Label>
-      <TextBox Text="{Binding Connection.ConnectionString}" />
-    </WrapPanel>
+  <Window.Content>
+    <StackPanel>
+      <WrapPanel>
+        <Label>
+          Connection string
+        </Label>
+        <TextBox Text="{Binding Connection.ConnectionString}" />
+      </WrapPanel>
 
-    <WrapPanel>
-      <Label>
-        Table name
-      </Label>
-      <TextBox Text="{Binding Connection.TableName}" />
-    </WrapPanel>
+      <WrapPanel>
+        <Label>
+          Table name
+        </Label>
+        <TextBox Text="{Binding Connection.TableName}" />
+      </WrapPanel>
 
-    <WrapPanel>
-      <Label>
-        Partition key (starts with)
-      </Label>
-      <TextBox Text="{Binding Query.PartitionKey}" />
-    </WrapPanel>
-    <WrapPanel>
-      <Label>
-        Level
-      </Label>
-      <ComboBox ItemsSource="{StaticResource Level}" SelectedValue="{Binding Query.Level}" />
-    </WrapPanel>
+      <WrapPanel>
+        <Label>
+          Partition key (starts with)
+        </Label>
+        <TextBox Text="{Binding Query.PartitionKey}" />
+      </WrapPanel>
+      <WrapPanel>
+        <Label>
+          Level
+        </Label>
+        <ComboBox ItemsSource="{StaticResource Level}" SelectedValue="{Binding Query.Level}" />
+      </WrapPanel>
 
-    <WrapPanel>
-      <Label>
-        Minimum date
-      </Label>
-      <DatePicker SelectedDate="{Binding Query.MinimumDate}" />
-    </WrapPanel>
+      <WrapPanel>
+        <Label>
+          Minimum date
+        </Label>
+        <DatePicker SelectedDate="{Binding Query.MinimumDate}" />
+      </WrapPanel>
 
-    <WrapPanel>
-      <Label>
-        Maximum date
-      </Label>
-      <DatePicker SelectedDate="{Binding Query.MaximumDate}" />
-    </WrapPanel>
+      <WrapPanel>
+        <Label>
+          Maximum date
+        </Label>
+        <DatePicker SelectedDate="{Binding Query.MaximumDate}" />
+      </WrapPanel>
 
-    <WrapPanel>
-      <Label>
-        Number of results
-      </Label>
-      <TextBox Text="{Binding Query.MaxResults}" />
-    </WrapPanel>
+      <WrapPanel>
+        <Label>
+          Number of results
+        </Label>
+        <TextBox Text="{Binding Query.MaxResults}" />
+      </WrapPanel>
 
-    <WrapPanel>
-      <Button Width="400" Command="{Binding RetrieveResults}">Get results</Button>
-    </WrapPanel>
-   
-  </StackPanel>
+      <WrapPanel>
+        <Button Width="400" Command="{Binding RetrieveResults}">Get results</Button>
+      </WrapPanel>
+      <WrapPanel>
+        <DataGrid ItemsSource="{Binding Results}" AutoGenerateColumns="True" 
+      ScrollViewer.CanContentScroll="True" 
+      ScrollViewer.VerticalScrollBarVisibility="Auto"
+      ScrollViewer.HorizontalScrollBarVisibility="Auto" 
+                Width="400"/>
+      </WrapPanel>
+    </StackPanel>
+
+
+  </Window.Content>
+
+
 </Window>
