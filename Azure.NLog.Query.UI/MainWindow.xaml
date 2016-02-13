@@ -8,24 +8,20 @@
         mc:Ignorable="d"
         xmlns:ctrl="clr-namespace:Azure.NLog.Query.UI.Controllers"
         xmlns:system="clr-namespace:System;assembly=mscorlib"
-        Title="Query Azure logs" Height="350" Width="525">
+        Title="Query Azure logs" Height="500" Width="725">
 
   <Window.DataContext>
     <ctrl:QueryController />
   </Window.DataContext>
 
   <Window.Resources>
-    <Style TargetType="TextBox">
-      <Setter Property="Width" Value="200" />
-    </Style>
+
+
     <Style TargetType="Label">
       <Setter Property="Width" Value="200" />
     </Style>
-    <Style TargetType="ComboBox">
-      <Setter Property="Width" Value="200" />
-    </Style>
-    <Style TargetType="DatePicker">
-      <Setter Property="Width" Value="200" />
+    <Style TargetType="DockPanel">
+      <Setter Property="LastChildFill" Value="True" />
     </Style>
 
     <x:Array x:Key="Level" Type="system:String">
@@ -44,70 +40,94 @@
     </x:Array>
   </Window.Resources>
 
-  <Window.Content>
-    <StackPanel>
-      <WrapPanel>
+  <Grid>
+    <Grid.RowDefinitions>
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="Auto" />
+      <RowDefinition Height="*" />
+    </Grid.RowDefinitions>
+
+    <Grid.ColumnDefinitions>
+      <ColumnDefinition Width="*" />
+    </Grid.ColumnDefinitions>
+    <StackPanel Grid.Row="0" Grid.Column="0">
+      <DockPanel>
         <Label>
           Connection string
         </Label>
         <TextBox Text="{Binding Connection.ConnectionString}" />
-      </WrapPanel>
+      </DockPanel>
 
-      <WrapPanel>
+      <DockPanel>
         <Label>
           Table name
         </Label>
         <TextBox Text="{Binding Connection.TableName}" />
-      </WrapPanel>
+      </DockPanel>
+    </StackPanel>
 
-      <WrapPanel>
+    <StackPanel Grid.Column="0" Grid.Row="1">
+      <DockPanel>
         <Label>
           Partition key (starts with)
         </Label>
         <TextBox Text="{Binding Query.PartitionKey}" />
-      </WrapPanel>
-      <WrapPanel>
+      </DockPanel>
+      <DockPanel>
         <Label>
           Level
         </Label>
         <ComboBox ItemsSource="{StaticResource Level}" SelectedValue="{Binding Query.Level}" />
-      </WrapPanel>
+      </DockPanel>
 
-      <WrapPanel>
+      <DockPanel>
         <Label>
           Minimum date
         </Label>
         <DatePicker SelectedDate="{Binding Query.MinimumDate}" />
-      </WrapPanel>
+      </DockPanel>
 
-      <WrapPanel>
+      <DockPanel>
         <Label>
           Maximum date
         </Label>
         <DatePicker SelectedDate="{Binding Query.MaximumDate}" />
-      </WrapPanel>
+      </DockPanel>
 
-      <WrapPanel>
+      <DockPanel>
         <Label>
           Number of results
         </Label>
         <TextBox Text="{Binding Query.MaxResults}" />
-      </WrapPanel>
+      </DockPanel>
 
-      <WrapPanel>
-        <Button Width="400" Command="{Binding RetrieveResults}">Get results</Button>
-      </WrapPanel>
-      <WrapPanel>
-        <DataGrid ItemsSource="{Binding Results}" AutoGenerateColumns="True" 
-      ScrollViewer.CanContentScroll="True" 
-      ScrollViewer.VerticalScrollBarVisibility="Auto"
-      ScrollViewer.HorizontalScrollBarVisibility="Auto" 
-                Width="400"/>
-      </WrapPanel>
+      <DockPanel>
+        <Button Command="{Binding RetrieveResults}">Get results</Button>
+      </DockPanel>
+
+      <DockPanel>
+        <Label Content="{Binding Message}" />
+      </DockPanel>
     </StackPanel>
 
+    <DataGrid MaxHeight="200" IsReadOnly="True" Grid.Row="2" ItemsSource="{Binding Results}"
+              AutoGenerateColumns="False"
+              HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto"
+              ScrollViewer.CanContentScroll="True"
+              ScrollViewer.VerticalScrollBarVisibility="Auto"
+              ScrollViewer.HorizontalScrollBarVisibility="Auto"
+              ColumnWidth="*">
+      <DataGrid.Columns>
+        <DataGridTextColumn Header="Time stamp" Binding="{Binding LogTimeStamp}" />
+        <DataGridTextColumn Header="Partition key" Binding="{Binding PartitionKey}" />
+        <DataGridTextColumn Binding="{Binding Level}" Header="Level" />
+        <DataGridTextColumn Header="Message" Binding="{Binding Message}" />
+      </DataGrid.Columns>
+    </DataGrid>
 
-  </Window.Content>
+
+  </Grid>
 
 
 </Window>

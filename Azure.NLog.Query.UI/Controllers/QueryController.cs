@@ -1,4 +1,5 @@
 ﻿using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using AutoMapper;
@@ -13,6 +14,7 @@ namespace Azure.NLog.Query.UI.Controllers
     private ConnectionViewModel connection;
     private QueryViewModel query;
     private ObservableCollection<LogEntity> results;
+    private string message;
 
     public QueryController()
     {
@@ -25,6 +27,17 @@ namespace Azure.NLog.Query.UI.Controllers
     }
 
     public ICommand RetrieveResults { get; private set; }
+
+    public string Message
+    {
+      get { return this.message; }
+      set
+      {
+        if (value == this.message) return;
+        this.message = value;
+        this.OnPropertyChanged(nameof(this.Message));
+      }
+    }
 
     public ConnectionViewModel Connection
     {
@@ -64,7 +77,10 @@ namespace Azure.NLog.Query.UI.Controllers
       var mapper = new MapperConfiguration(cfg => cfg.CreateMissingTypeMaps = true).CreateMapper();
       var nQuery = mapper.Map<QueryViewModel, AzureNLogQueryDefinition>(this.Query);
       var queryer = new TableQueryer(this.Connection.ConnectionString, this.Connection.TableName);
-      var rSet = await queryer.GetLogsAsync(nQuery, this.Query.MaxResults);
+      this.Message = "Getting logs";
+      var rSet = (await queryer.GetLogsAsync(nQuery, this.Query.MaxResults)).ToArray();
+
+      this.Message = $"{rSet.Length} logs found";
 
       this.Results = new ObservableCollection<LogEntity>(rSet);
     }

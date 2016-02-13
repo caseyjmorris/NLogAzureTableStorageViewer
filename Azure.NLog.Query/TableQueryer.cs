@@ -44,7 +44,7 @@ namespace Azure.NLog.Query
         results.AddRange(seg.Results);
       } while (token != null && results.Count < (maxResults ?? int.MaxValue));
 
-      return results;
+      return results.OrderByDescending(r => r.LogTimeStamp).Take(maxResults ?? int.MaxValue);
     }
 
     private TableQuery<LogEntity> MapQuery(AzureNLogQueryDefinition originalQuery)
